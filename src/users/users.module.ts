@@ -6,6 +6,7 @@ import { UsersService } from './users.service';
 import { User, UserSchema } from './user.schema';
 import { BullModule } from '@nestjs/bull';
 import { NotificationProcessor } from './notification.processor';
+import { EmailModule } from '../email/email.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { NotificationProcessor } from './notification.processor';
     BullModule.registerQueue({
       name: 'notification',
     }),
+    EmailModule,
   ],
   controllers: [UsersController],
   providers: [UsersService, NotificationProcessor],
