@@ -1,5 +1,5 @@
 // Path: src\app.module.ts
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CacheModule } from '@nestjs/cache-manager';
 import { BullModule } from '@nestjs/bull';
@@ -8,7 +8,9 @@ import { redisStore } from 'cache-manager-redis-store';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { CronModule } from './cron/cron.module'; // ← New import
+import { CronModule } from './cron/cron.module';
+import { MetricsModule } from './metrics/metrics.module';
+import { MetricsMiddleware } from './middleware/metrics.middleware';
 
 @Module({
   imports: [
@@ -37,8 +39,13 @@ import { CronModule } from './cron/cron.module'; // ← New import
     ScheduleModule.forRoot(),
     UsersModule,
     CronModule,
+    MetricsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(MetricsMiddleware).forRoutes('*');
+  }
+}

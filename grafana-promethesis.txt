@@ -1,0 +1,132 @@
+// Path: grafana-promethesis.txt
+# Docker Management Commands
+
+# Start Monitoring Stack - Prometheus, Grafana, Node-exporter sab containers background me start karta hai
+docker-compose -f docker-compose.monitoring.yml up -d
+
+# Stop Monitoring Stack - Sab monitoring containers completely band kar deta hai
+docker-compose -f docker-compose.monitoring.yml down
+
+# Check Running Containers - Sab running containers ka list dikhata hai
+docker ps
+
+# Check All Containers (Including Stopped) - Running aur stopped dono containers dikhata hai
+docker ps -a
+
+# Restart Single Service - Sirf ek specific service restart karta hai
+docker-compose -f docker-compose.monitoring.yml restart prometheus
+docker-compose -f docker-compose.monitoring.yml restart grafana
+docker-compose -f docker-compose.monitoring.yml restart node-exporter
+
+# View Container Logs - Container ki internal logs dikhata hai
+docker logs prometheus
+docker logs grafana
+docker logs node-exporter
+
+# Follow Live Logs - Real-time logs stream karta hai
+docker logs -f prometheus
+docker logs -f grafana
+
+# Remove Containers and Volumes - Containers aur unka data completely delete kar deta hai
+docker-compose -f docker-compose.monitoring.yml down -v
+
+# NestJS Development Commands
+
+# Start Development Server - NestJS app development mode me start karta hai with hot reload
+npm run start:dev
+
+# Start Production Server - Production mode me app start karta hai
+npm run start:prod
+
+# Build Application - TypeScript code ko JavaScript me compile karta hai
+npm run build
+
+# Install Dependencies - package.json me listed sab dependencies install karta hai
+npm install
+
+# File and Directory Commands
+
+# Create Directories - Specific folders banata hai project structure ke liye
+mkdir monitoring
+mkdir src/metrics
+mkdir src/middleware
+
+# List Files with Details - Current directory ki sab files aur folders detailed info ke saath
+ls -la
+
+# Check File Type - File ka type aur format check karta hai
+file docker-compose.monitoring.yml
+file monitoring/prometheus.yml
+
+# Create Empty Files - Empty files banata hai
+touch docker-compose.monitoring.yml
+touch monitoring/prometheus.yml
+
+# Testing and Monitoring Commands
+
+# Test API Endpoints - API endpoints manually test karne ke liye
+curl http://localhost:7000/
+curl http://localhost:7000/metrics
+curl http://localhost:7000/users
+
+# Check Port Usage - Specific ports par koi service chal rahi ya nahi
+netstat -ano | findstr :7000
+netstat -ano | findstr :9090
+netstat -ano | findstr :7001
+
+# System Resource Check - Running containers ka real-time resource usage
+docker stats
+
+# Troubleshooting Commands
+
+# Check Docker Service Status - Docker properly installed aur running hai ya nahi
+docker version
+docker info
+
+# Clean Docker Cache - Unused containers, networks, volumes delete karta hai
+docker system prune
+docker volume prune
+
+# Force Recreate Containers - Containers ko completely recreate karta hai
+docker-compose -f docker-compose.monitoring.yml up -d --force-recreate
+
+# Check Container Health - Container ki detailed information aur health status
+docker inspect prometheus
+docker inspect grafana
+
+# Backup and Restore Commands
+
+# Export Grafana Dashboards - Current dashboards ka backup nikalta hai
+docker exec grafana grafana-cli admin export-dashboard
+
+# Backup Prometheus Data - Prometheus historical data backup
+docker cp prometheus:/prometheus ./prometheus-backup
+
+
+//////////////////////////////////////////////////////////////////////  URL   /////////////////////////////////////////////////////////////
+
+# Access URLs
+
+# Grafana Dashboard - Main Grafana interface (Username: admin, Password: admin123)
+http://localhost:7001
+
+# Grafana Data Sources - Direct data sources page
+http://localhost:7001/datasources
+
+# Grafana Import Dashboard - Ready-made dashboards import page
+http://localhost:7001/dashboard/import
+
+# Prometheus Main Interface - Prometheus web interface
+http://localhost:9090
+
+# Prometheus Targets - Sab configured targets ki status
+http://localhost:9090/targets
+
+# Prometheus Configuration - Current Prometheus configuration
+http://localhost:9090/config
+
+# NestJS Application Metrics - NestJS app ki Prometheus format metrics
+http://localhost:7000/metrics
+
+# Node Exporter Metrics - System-level metrics (CPU, RAM, Disk)
+http://localhost:9100/metrics
