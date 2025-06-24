@@ -40,4 +40,31 @@ export class EmailService {
       throw error;
     }
   }
+
+  async sendAlertEmail(to: string, subject: string, message: string) {
+    console.log(`🚨 Sending alert email to: ${to}`);
+
+    try {
+      const mailOptions = {
+        from: 'jilanianas13@gmail.com', // UPDATED: Proper from address
+        to: to,
+        subject: subject, // ADDED: Dynamic subject for alerts
+        html: `
+          <h2>🚨 Price Alert!</h2>
+          <p><strong>${message}</strong></p>
+          <p>Time: ${new Date().toLocaleString()}</p>
+          <hr>
+          <p><small>This is an automated alert from your Trading App</small></p>
+          <p><small>Your Bitcoin may lose</small></p>
+        `, // ADDED: Professional alert email template
+      };
+
+      const result = await this.transporter.sendMail(mailOptions);
+      console.log('✅ Alert email sent successfully!');
+      return result;
+    } catch (error) {
+      console.error('❌ Alert email sending failed:', error.message);
+      throw error;
+    }
+  }
 }

@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
 import { CronModule } from './cron/cron.module';
 import { MetricsModule } from './metrics/metrics.module';
 import { MetricsMiddleware } from './middleware/metrics.middleware';
+import { PriceMonitoringModule } from './price-monitoring/price-monitoring.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { MetricsMiddleware } from './middleware/metrics.middleware';
     UsersModule,
     CronModule,
     MetricsModule,
+    PriceMonitoringModule,
   ],
   controllers: [AppController],
   providers: [AppService],
